@@ -1,0 +1,16 @@
+[
+{
+  "modid": "aromabackups3",
+  "name": "Aroma Backup S3",
+  "description": "Mod for uploading backup file to S3 storage (like Amazon S3)",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ExampleDude"],
+  "credits": "The Forge and FML guys, for making forge. Aroma for making AromaBackup",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["aromabackup"]
+}
+]
