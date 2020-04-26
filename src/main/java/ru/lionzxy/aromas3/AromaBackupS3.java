@@ -12,7 +12,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = AromaBackupS3.MODID, name = AromaBackupS3.NAME,
-        version = AromaBackupS3.VERSION, dependencies = "required-after:aromabackup")
+        version = AromaBackupS3.VERSION, dependencies = "required-after:aromabackup",
+        acceptableRemoteVersions = "*")
 public class AromaBackupS3 {
     public static final String MODID = "aromabackups3";
     public static final String NAME = "Aroma Backup S3";
