@@ -4,15 +4,16 @@ import aroma1997.backup.common.notification.IBackupNotification;
 import aroma1997.backup.common.storageformat.IBackupInfo;
 import io.minio.MinioClient;
 import io.minio.PutObjectOptions;
-import io.minio.errors.*;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class S3BackupUploader implements IBackupNotification {
+    // 200 MB
+    private static long PART_SIZE = 200 * 1024 * 1024;
+    private Executor executor = Executors.newSingleThreadExecutor();
     private Logger logger;
     private MinioClient client;
 
@@ -28,11 +29,19 @@ public class S3BackupUploader implements IBackupNotification {
 
     @Override
     public void backupCreateEnd(IBackupInfo info) {
-        final File file = info.getFile();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                uploadBackup(info.getFile());
+            }
+        });
+    }
+
+    private void uploadBackup(File file) {
         logger.info("Start uploading file to S3 Storage: " + AromaBackupConfig.url + " bucket " + AromaBackupConfig.bucket_name);
         final String newFileName = System.currentTimeMillis() + "-" + file.getName();
         logger.info("With name: " + newFileName + " from " + file.getAbsolutePath());
-        final PutObjectOptions putObjectOptions = new PutObjectOptions(file.length(), -1);
+        final PutObjectOptions putObjectOptions = new PutObjectOptions(file.length(), PART_SIZE);
 
         try {
             client.putObject(AromaBackupConfig.bucket_name, newFileName, file.getAbsolutePath(), putObjectOptions);
@@ -44,7 +53,6 @@ public class S3BackupUploader implements IBackupNotification {
         logger.info("Upload to S3 Storage successful!");
 
         if (AromaBackupConfig.delete_after_upload) {
-
             if (file.delete()) {
                 logger.info("Delete local backup file " + file.getAbsolutePath() + " successful");
             } else {
