@@ -16,7 +16,7 @@ apply plugin: "com.wynprice.cursemaven"
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.1"
+version = "1.2"
 group = "ru.lionzxy.aromas3" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "aromabackups3"
 
