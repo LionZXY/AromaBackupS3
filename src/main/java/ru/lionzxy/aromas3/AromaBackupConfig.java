@@ -18,4 +18,8 @@ public class AromaBackupConfig {
 
     public static String bucket_name = "minecraft";
     public static boolean delete_after_upload = true;
+
+    @Config.RangeInt(min = 0)
+    @Config.Comment("The maximum amount of backup objects to keep in bucket (0 = all)")
+    public static int keep_latest = 10;
 }
