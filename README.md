@@ -21,6 +21,11 @@ general {
     # Enable/Disable upload via S3
     B:enable=true
 
+    # The maximum amount of backup objects to keep in bucket (0 = all)
+    # Min: 0
+    # Max: 2147483647
+    I:keep_latest=10
+
     # Secret key is the password to your account
     S:secret_key=zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG
 
